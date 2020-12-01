@@ -1,0 +1,24 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+ios: !include ios.yaml
+# To load for a specific integration:
+camera:
+  - platform: demo
+#influxdb:
+#  api_version: 2
+#  ssl: false
+#  host: influxdb
+#  port: 8086
+#  token: GENERATED_AUTH_TOKEN
+#  organization: RANDOM_16_DIGIT_HEX_ID
+#  bucket: "HA-bucket" #BUCKET_NAME

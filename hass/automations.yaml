@@ -1,0 +1,16 @@
+- id: garage_door_opened
+  alias: Garage Door Opened
+  trigger:
+    platform: state
+    entity_id: binary_sensor.garage_door_tilt_sensor_sensor
+    from: 'off'
+    to: 'on'
+  action:
+    service: notify.mobile_app_romans_iphone
+    data:
+      title: "Garage Door"
+      message: "Garage door was opened."
+      data:
+        push:
+          category: camera
+        entity_id: camera.garage_camera

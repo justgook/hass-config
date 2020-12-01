@@ -1,0 +1,11 @@
+.storage
+*.log
+*.db
+
+.vscode
+.DS_Store
+.idea/
+
+esphome/*
+!esphome/*.yaml
+!esphome/.gitignore

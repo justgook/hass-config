@@ -1,0 +1,49 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:stable
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8123"]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+    ports:
+      - "8123:8123"
+    restart: on-failure
+    volumes:
+      - ./hass:/config
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Europe/Riga
+#    depends_on:
+#      - influxdb
+  esphome:
+    image: esphome/esphome
+    volumes:
+      - ./esphome:/config:rw
+      # Use local time for logging timestamps
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6052:6052"
+    restart: always
+    #(MacOS specific command)
+    environment:
+      - ESPHOME_DASHBOARD_USE_PING=true
+## Advanced / experimental stuff
+  facebox:
+    image: machinebox/facebox
+    ports:
+      - "8080:8080"
+#    restart: always
+    environment:
+      - MB_KEY=NjJiMWE3ZDcxM2RjNTIzNGUwODkwNjFiNWM3MmQ3ODA.sI5HJVGPfNkeI4EA7xkoN9mqpY3B_FkfIVJ7yVIJLyLE8-ZCzU-wzbARpcChM4U_BlgHZLAf4kqdNo_I35y5-Q
+#
+#  influxdb:
+#    image: quay.io/influxdb/influxdb:2.0.0-rc
+#    volumes:
+#      - ./influxdb-data:/root/.influxdbv2
+#    ports:
+#      - "8086:8086"
+#      - "9999:9999"
